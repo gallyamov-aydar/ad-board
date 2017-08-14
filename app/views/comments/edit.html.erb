@@ -1,0 +1,19 @@
+<div id="edit-comment">
+		<h3>Редактирование комментария</h3>
+
+		<%= form_for @comment, url: ad_comment_path(@ad.id, @comment.id), method: :patch, html: { multipart: true } do |f| %>
+
+			<div class="field">
+				<%= f.text_area :message, :placeholder => "Сообщение" %>
+			</div>
+
+			<div class="field">
+				<%= f.label :image, 'Изображение' %><br />
+				<%= f.file_field :image, :id => "image-upload" %>
+			</div>
+
+			<div class="field">
+				<%= f.submit "Изменить", :id => "submit_button" %>
+			</div>
+		<% end %>	
+</div>

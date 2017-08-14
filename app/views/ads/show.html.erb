@@ -1,0 +1,60 @@
+<div class="ad-overview panel clearfix">
+	<h2 class="headline"><%= @ad.name %></h2>
+	<div class="clearfix">
+		<%= link_to @ad.image.url, :target => "_blank", class: "overview-image" do %>
+			<%= image_tag @ad.image.url(:medium) %>
+		<% end %>
+		<p class="overview-text"><%= @ad.text %></p>
+	</div>
+
+	<div class="user-info">
+		<b>Разместил: </b> <%= @ad.user.full_name %>, <i> <%= link_to @ad.user.login, user_path(@ad.user.id) %> </i> <br>
+		<b>Адрес: </b>  <%= @ad.user.country %>, <%= @ad.user.state %>, <%= @ad.user.city %>, <%= @ad.user.address %>
+	</div>
+
+	<% if user_signed_in? %>
+		<% if current_user.login == @ad.user.login %>
+
+			<%= button_to "Редактировать", edit_ad_path(@ad.id), method: :get, class: "edit-btn" %>
+
+			<%= button_to "Удалить", ad_path(@ad.id), data: { confirm: "Вы уверены?" }, method: :delete, class: "delete-btn" %>
+
+		<% end %>
+	<% end %>
+</div>		
+
+<div class="panel">
+
+	<div id="comments">
+		<%= render partial: 'comments/comments' %>
+	</div>
+
+	<div id="add-comment">
+		<% if user_signed_in? %>
+
+			<h3>Добавить комментарий</h3>
+			<%= form_for @comment, url: ad_comments_path(@ad.id), html: { multipart: true }, remote: true do |f| %>
+
+				<div class="field">
+					<%= f.text_area :message, :placeholder => "Сообщение" %>
+				</div>
+
+				<div class="field">
+					<%= f.label :image, 'Изображение' %><br />
+					<%= f.file_field :image, :id => "image-upload" %>
+				</div>
+
+				<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+				
+				<div class="field">
+					<%= f.submit "Добавить", :id => "submit_button" %>
+				</div>
+			<% end %>	
+
+		<% else %>	
+			<h3><%= link_to 'Войдите', new_user_session_path %>, чтобы комменитровать</h3>
+	</div>
+
+	<% end %>
+</div>
+

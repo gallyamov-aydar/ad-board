@@ -1,0 +1,21 @@
+<div class="panel" id="ad-form">
+	<h3>Редактирование объявления "<%= @ad.name %>"</h3>
+		<%= form_for @ad, url: ad_path(@ad.id), method: :patch, html: { multipart: true } do |f| %>
+			<div class="field">
+				<%= f.text_field :name, :placeholder => "Название" %>
+			</div>
+
+			<div class="field">
+				<%= f.text_area :text, :placeholder => "Текст объявления" %>
+			</div>
+
+			<div class="field">
+				<%= f.label :image, 'Изображение' %><br />
+				<%= f.file_field :image %>
+			</div>
+
+			<div class="field">
+				<%= f.submit "Изменить", :id => "submit_button" %>
+			</div>
+	<% end %>
+</div>

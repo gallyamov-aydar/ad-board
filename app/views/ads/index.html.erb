@@ -1,0 +1,21 @@
+<%= form_tag(root_path, :method => "get", id: "search-form") do %>
+	<%= text_field_tag :search, params[:search], placeholder: "Поиск" %> 
+	<%= submit_tag "Найти", id: "submit_button" %>
+<% end %>
+
+<% if params[:search] %>
+	<% if @ads.length == 0 %>
+		<h3 style="margin-bottom: 20px">По запросу "<%= params[:search] %>" ничего не найдено </h3>		
+	<% else %>	
+		<h3 style="margin-bottom: 20px">Результаты по запросу "<%= params[:search] %>": </h3>
+	<% end %>	
+<% end %>
+
+<% @ads.each do |ad| %>
+	<div class="ad-preview panel clearfix">
+		<%= link_to ad.name, ad_path(ad.id), class: "preview-header-link" %>
+		<%= image_tag ad.image.url(:thumb), class: "preview-image" %>
+		<p style="font-size: 15px" class="word-wrap"><%= ad.text %></p>
+		<b>Разместил: </b> <%= ad.user.full_name %>, <i> <%= link_to ad.user.login, user_path(ad.user.id) %> </i> <br>
+	</div>	
+<% end %>

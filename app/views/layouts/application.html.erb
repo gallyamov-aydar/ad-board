@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Доска объявлений</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body>
+    <nav id="main-menu">
+    	<ul id="links">
+    		<li><%= link_to 'Список пользователей', users_path %></li>
+    		<li><%= link_to 'Список объявлений', root_path %></li>
+    		<% if user_signed_in? %>
+    			<li><%= link_to 'Разместить объявление', new_ad_path %></li>
+    		<% end %>	
+    	</ul>
+    	
+    	<ul id="user-block">
+    		<% if user_signed_in? %>
+	    		<div class="dropdown">
+	    			<span><%= link_to current_user.login, user_path(current_user.id) %></span>
+		    		<div class="dropdown-menu">
+		    			<%= link_to 'Редактировать', edit_user_registration_path %>
+		    			<%= link_to 'Выйти', destroy_user_session_path, :method => :delete %>
+		    		</div>
+	    		</div>
+	
+    		<% else %>
+    			<li><%= link_to 'Войти', new_user_session_path %></li>
+    			<li><%= link_to 'Зарегистрироваться', new_user_registration_path %></li>
+    		<% end %>
+    	</ul>
+    </nav>
+
+    <main id="container">
+    	<%= yield %>
+    </main>
+
+  </body>
+</html>

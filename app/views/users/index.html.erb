@@ -1,0 +1,10 @@
+<div id="users">
+	<% @users.each_with_index do |user, index| %>
+		<div class="panel">
+			<b>Имя пользователя: </b> <%= user.login %> <br>
+			<b>ФИО: </b><%= user.full_name %> <br>
+			<b>Адрес: </b> <%= user.country %>, <%= user.state %>, <%= user.city %> <br>
+			<%= link_to 'Профиль', user_path(user.id) %>
+		</div>
+	<% end %>	
+</div>

@@ -1,0 +1,27 @@
+<div id="users">
+	<div class="panel">
+		<h2>Профиль пользователя <%= @user.login %></h2>	
+		<b>Полное имя: </b> <%= @user.full_name %> <br>
+
+		<b>Email: </b> <%= @user.email %> <br>
+
+		<b>Дата рождения: </b> <%= @user.birthday.strftime '%d-%m-%Y' %> <br>
+
+		<b>Адрес: </b> <%= @user.country %>, <%= @user.state %>, <%= @user.city %>, <%= @user.address %> <br>
+
+		<b>Индекс: <%= @user.zip %></b> <br>
+		
+		<b>Все объявления пользователя: </b>
+		
+		<ul>
+			<% @user.ads.each do |ad| %>
+				<li> <%= link_to ad.name, ad_path(ad.id) %> </li>
+			<% end %>
+		</ul>
+	</div>
+</div>
+
+
+
+
+

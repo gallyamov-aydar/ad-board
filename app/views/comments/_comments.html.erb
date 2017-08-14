@@ -1,0 +1,28 @@
+<h3>Комментарии</h3>
+
+<% if @ad.comments.length == 0 %>
+	<div class="comment-section">
+		<p>Комментариев пока нет</p>
+	</div>
+<% else %>	
+	<% @ad.comments.each do |comment| %>
+		<div class="comment-section clearfix">
+			<p> <%= link_to comment.user.login, user_path(comment.user.id) %>: <%= comment.message %></p>
+
+			<% if comment.image.exists? %>
+				<%= link_to comment.image.url, :target => "_blank", class: "comment-image" do %>
+					<%= image_tag comment.image.url(:medium) %>
+				<% end %>
+			<% end %>
+
+
+			<% if user_signed_in? %>
+				<% if current_user.login == comment.user.login %>
+						<%= button_to "Редактировать", edit_ad_comment_path(@ad.id, comment.id), method: :get, class: "edit-btn" %>
+
+						<%= button_to "Удалить", ad_comment_path(comment.id, @ad.id), data: { confirm: "Вы уверены?" }, remote: true, method: :delete, class: "delete-btn" %>
+				<% end %>
+			<% end %>
+		</div>
+	<% end %>
+<% end %>

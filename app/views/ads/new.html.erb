@@ -1,0 +1,21 @@
+<div class="panel" id="ad-form">
+	<h3>Новое объявление</h3>
+		<%= form_for @ad, url: {action: "create"}, html: { multipart: true }, authenticity_token: true do |f| %>
+			<div class="field">
+				<%= f.text_field :name, :placeholder => "Название" %>
+			</div>
+
+			<div class="field">
+				<%= f.text_area :text, :placeholder => "Текст объявления" %>
+			</div>
+
+			<div class="field">
+				<%= f.label :image, 'Изображение' %><br />
+				<%= f.file_field :image %>
+			</div>
+
+			<div class="field">
+				<%= f.submit "Добавить", :id => "submit_button" %>
+			</div>
+	<% end %>
+</div>
